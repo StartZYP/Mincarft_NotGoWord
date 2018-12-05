@@ -15,7 +15,7 @@ public class PlayerListener implements Listener{
 
     @EventHandler
     public void PlayerGoworld(PlayerChangedWorldEvent playerChangedWorldEvent){
-        Player player = (Player)playerChangedWorldEvent.getPlayer();
+        Player player = playerChangedWorldEvent.getPlayer();
         String WorldName = player.getLocation().getWorld().getName();
 
         for (Map.Entry<String,String> TempName: WorldMain.Worldorid.entrySet()){
