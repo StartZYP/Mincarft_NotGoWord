@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="NotGoWord:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/NotGoWord_jar</output-path>
+    <root id="archive" name="NotGoWord.jar">
+      <element id="module-output" name="NotGoWorld" />
+    </root>
+  </artifact>
+</component>
