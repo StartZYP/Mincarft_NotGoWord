@@ -46,11 +46,11 @@ public class WorldMain extends JavaPlugin {
         if (itemlist.size()!=0&&worldlist.size()!=0&&!Main.equalsIgnoreCase("")){
             Bukkit.getPluginManager().registerEvents(new PlayerListener(),this);
             System.out.println("=======NoWorld加载成功=======");
-            System.out.println("NoWorld 作者:QQ1742352262 定制");
+            System.out.println("NoWorld 作者:QQ44920040定制");
             System.out.println("=======NoWorld加载成功=======");
         }else {
             System.out.println("§4=======NoWorld加载失败=======");
-            System.out.println("NoWorld 作者:QQ1742352262 定制");
+            System.out.println("NoWorld 作者:QQ44920040 定制");
             System.out.println("§4=======NoWorld加载失败=======");
         }
         super.onEnable();
