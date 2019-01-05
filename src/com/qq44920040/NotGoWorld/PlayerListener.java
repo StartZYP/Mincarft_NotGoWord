@@ -1,43 +1,50 @@
 package com.qq44920040.NotGoWorld;
 
-
-import org.bukkit.Material;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.Map;
 
 
 public class PlayerListener implements Listener{
+    @EventHandler
+    public void PlayerClickEvent(InventoryClickEvent event){
+        Player p = (Player) event.getWhoClicked();
+        if (WorldMain.worldlist.toString().contains(p.getWorld().getName())){
+            ItemStack itemStack = event.getCurrentItem();
+            if (itemStack!=null) {
+                for (String Item:WorldMain.itemlist){
+                    if (String.valueOf(itemStack.getTypeId()).equalsIgnoreCase(Item)){
+                        event.setCancelled(true);
+                        p.sendMessage(WorldMain.Msg);
+                        p.teleport(Bukkit.getWorld(WorldMain.Main).getSpawnLocation());
+                    }
+                }
+            }
+        }
+    }
 
     @EventHandler
-    public void PlayerGoworld(PlayerChangedWorldEvent playerChangedWorldEvent){
-        Player player = playerChangedWorldEvent.getPlayer();
-        String WorldName = player.getLocation().getWorld().getName();
-
-        for (Map.Entry<String,String> TempName: WorldMain.Worldorid.entrySet()){
-            if (WorldName.equalsIgnoreCase(TempName.getKey())){
-                String[] temparry = TempName.getValue().split("-");
-                if (player.getInventory().getMaxStackSize()!=0){
-                    for (ItemStack itemStack:player.getInventory().getContents()){
-                        //物品空位则为Material.AIR 也可能为null
-                        if(itemStack==null || itemStack.getType()== Material.AIR)
-                            continue;
-//                        System.out.println("迭代背包中.物品ID为："+itemStack.getTypeId());
-                        if (String.valueOf(itemStack.getTypeId()).equalsIgnoreCase(temparry[0])){
-//                            System.out.println("判定玩家有灵宝武器");
-                            player.sendMessage("§4[NoWorld]§2切换世界成功");
-                            return;
+    public void PlayerChangeWorld(PlayerChangedWorldEvent event) {
+        Player p = event.getPlayer();
+        if (WorldMain.worldlist.toString().contains(p.getWorld().getName())) {
+            Inventory inv = event.getPlayer().getInventory();
+            for (int i = 0; i <= 35; i++) {
+                for (String Item : WorldMain.itemlist) {
+                    ItemStack itemStack = inv.getItem(i);
+                    if (itemStack != null) {
+                        if (String.valueOf(itemStack.getTypeId()).equalsIgnoreCase(Item)) {
+                            event.getPlayer().sendMessage(WorldMain.Msg);
+                            p.teleport(Bukkit.getWorld(WorldMain.Main).getSpawnLocation());
                         }
                     }
                 }
-                player.sendMessage(temparry[1]);
-                playerChangedWorldEvent.getPlayer().setHealth(0);
-//            System.out.println("迭代完成玩家没有灵宝切换至死亡");
             }
         }
+
     }
 }
