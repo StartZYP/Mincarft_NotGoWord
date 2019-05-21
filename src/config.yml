@@ -1,7 +1,12 @@
 Noworld:
-  - DIM-17
-Item:
-  - 1567
-  - 1165
-Msg: gegegegege
+  DIM-17:
+    Item:
+      - '1567:*'
+      - "1165:5"
+    Msg:  这是呵呵世界
+  DIM-1:
+    Item:
+      - "1158:3"
+      - "354:0"
+    Msg:  这是飞机世界
 MainWorld: zc

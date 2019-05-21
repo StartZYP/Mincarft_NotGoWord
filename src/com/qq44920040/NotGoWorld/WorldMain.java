@@ -6,24 +6,18 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Set;
 
 public class WorldMain extends JavaPlugin {
-    public static List<String> worldlist;
-    public static List<String> itemlist;
-    public static String Msg;
+    public static HashMap<String,WorldInfoEntity> Worlds = new HashMap<>();
     public static String Main;
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (label.equalsIgnoreCase("NGW")&&args.length==1){
             if (args[0].equalsIgnoreCase("reload")&&sender.isOp()){
-                this.saveDefaultConfig();
-                this.reloadConfig();
-                itemlist = getConfig().getStringList("Item");
-                worldlist = getConfig().getStringList("Noworld");
-                Msg = getConfig().getString("Msg");
-                Main = getConfig().getString("MainWorld");
+                LoadConfig();
                 sender.sendMessage("=======NoWorld加载成功=======");
             }
         }
@@ -39,21 +33,22 @@ public class WorldMain extends JavaPlugin {
         if (!(file.exists())){
             saveDefaultConfig();
         }
-        itemlist = getConfig().getStringList("Item");
-        worldlist = getConfig().getStringList("Noworld");
-        Msg = getConfig().getString("Msg");
-        Main = getConfig().getString("MainWorld");
-        if (itemlist.size()!=0&&worldlist.size()!=0&&!Main.equalsIgnoreCase("")){
-            Bukkit.getPluginManager().registerEvents(new PlayerListener(),this);
-            System.out.println("=======NoWorld加载成功=======");
-            System.out.println("NoWorld 作者:QQ44920040定制");
-            System.out.println("=======NoWorld加载成功=======");
-        }else {
-            System.out.println("§4=======NoWorld加载失败=======");
-            System.out.println("NoWorld 作者:QQ44920040 定制");
-            System.out.println("§4=======NoWorld加载失败=======");
-        }
+        Bukkit.getPluginManager().registerEvents(new PlayerListener(),this);
+        LoadConfig();
         super.onEnable();
+    }
+
+    private void LoadConfig(){
+        reloadConfig();
+        Main = getConfig().getString("MainWorld");
+        Set<String> mines = getConfig().getConfigurationSection("Noworld").getKeys(false);
+        for (String temp : mines) {
+            Worlds.put(temp,new WorldInfoEntity(getConfig().getStringList("Noworld."+temp+".Item"),getConfig().getString("Noworld."+temp+".Msg")));
+            //AppraisalInfo.put(temp, getConfig().getString("AppraisalItem."+temp+".Value"));
+        }
+        System.out.println("=======NoWorld加载成功=======");
+        System.out.println("NoWorld 作者:QQ44920040定制");
+        System.out.println("=======NoWorld加载成功=======");
     }
 
     @Override
