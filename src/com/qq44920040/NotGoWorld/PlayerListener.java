@@ -17,7 +17,7 @@ public class PlayerListener implements Listener{
     public void PlayerClickEvent(InventoryClickEvent event){
         Player p = (Player) event.getWhoClicked();
         String name = p.getWorld().getName();
-        System.out.println(event.getSlot());
+        //System.out.println(event.getSlot());
         if (WorldMain.Worlds.containsKey(name)){
             ItemStack itemStack = event.getCurrentItem();
             if (itemStack!=null) {
@@ -52,7 +52,7 @@ public class PlayerListener implements Listener{
         //System.out.println(name+"世界");
         if (WorldMain.Worlds.containsKey(name)) {
             Inventory inv = event.getPlayer().getInventory();
-            for (int i = 0; i <= 35; i++) {
+            for (int i = 0; i <= 39; i++) {
                 List<String> worldlist = WorldMain.Worlds.get(name).getWorldlist();
                 //System.out.println(worldlist.toString());
                 for (String Item : worldlist) {
